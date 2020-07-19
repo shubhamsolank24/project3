@@ -50,7 +50,7 @@ class Router:
 
 
 if __name__ == '__main__':
-      router = Router("root handler")  
+      router = Router("root handler", "not found handler")
     router.add_handler("/home", "home handler")  
     router.add_handler("/home/about", "about handler")  
     router.add_handler("/home/about/me/edit", "edit handler")  
