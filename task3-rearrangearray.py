@@ -1,39 +1,76 @@
-def rearrange_digits(input_list):
 
-    size = len(input_list)
-    if size <= 1:
-        return [-1, -1]
+   def rearrange_digits(input_list):
 
-    input_freq = [0] * 10
-    for num in input_list:
-        input_freq[num] += 1
+    sorted_list = []
+    result = []
+    x = 0
+    y = 0
+    sorted_list = mergesort(input_list)
+    length = len(sorted_list)-1
+    i = length
+    j = length-1
+    while i >= 0:
+        x = x*10 + sorted_list[i]
+        i = i-2
+    result = result+[x]
+    while j >= 0:
+        y = y*10 + sorted_list[j]
+        j = j-2
+    result = result+[y]
+    #print(result) 
+    return result
 
-    a1 = []
-    a2 = []
-    first = 1
-    if size % 2 != 0:
-        first = 2
-    for i in range(9, -1, -1):
-        while input_freq[i]:
-            if first:
-                a1.append(str(i))
-                first -= 1
-            else:
-                first += 1
-                a2.append(str(i))
-            input_freq[i] -= 1
-    #print(a1, a2)
-    return [int(''.join(a1)), int(''.join(a2))]
+    
+def mergesort(items):
+
+    if len(items) <= 1:
+        return items
+    
+    mid = len(items) // 2
+    left = items[:mid]
+    right = items[mid:]
+    
+    left = mergesort(left)
+    right = mergesort(right)
+    
+    return merge(left, right)
+    
+def merge(left, right):
+    
+    merged = []
+    left_index = 0
+    right_index = 0
+    
+    while left_index < len(left) and right_index < len(right):
+        if left[left_index] > right[right_index]:
+            merged.append(right[right_index])
+            right_index += 1
+        else:
+            merged.append(left[left_index])
+            left_index += 1
+
+    merged += left[left_index:]
+    merged += right[right_index:]
+        
+    return merged
 
 def test_function(test_case):
-    output = rearrange_digits(test_case[0])
-    solution = test_case[1]
-    if sum(output) == sum(solution):
-        print("Pass")
+    
+    if not test_case:
+        return []
+
     else:
-        print("Fail")
-        
-        test_function([[1, 2, 3, 4, 5], [542, 31]])
+        output = rearrange_digits(test_case[0])
+        solution = test_case[1]
+        if sum(output) == sum(solution):
+            print("Pass")
+        else:
+            print("Fail")
+
+test_function([[1, 2, 3, 4, 5], [531, 42]])
+#test_case = [[4, 6, 2, 5, 9, 8], [964, 852]]
+test_function ([[4, 6, 2, 5, 9, 8], [964, 852]])
+test_function ([[], []])
 test_case = [[4, 6, 2, 5, 9, 8], [964, 852]]
 test_function(test_case)
 test_function([[], [-1, -1]])
