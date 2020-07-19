@@ -10,8 +10,8 @@ Space complexity is O(logn) the recursive stack of binary search
 
 Task3 -Rearrange array
 
-Time complexity is O(nlogn) --> Just sort it and then apply the pattern iterating the array in reverse
-Space complexity is O(logn) as quicksort recursive stack have complexity O(logn)
+Time complexity is O(n log(n)) --> Just sort it and then apply the pattern iterating the array in reverse
+Space complexity is O(n) as quicksort recursive stack have complexity O(n)
 
 Task4- Dutch Flag
 
@@ -20,10 +20,10 @@ Space complexity is O(n) as the input_list n split in its 3 parts zeros, ones, t
 
 Task5- Autocomplete Tries
 
-The worst case run time complexity is O(n), where n is the no. of chars in word.
-The length of words.
+The worst case run time complexity O(l*n)
+The length of words.(l)
 The unique no. of chars at the same level.
-The no. of words.
+The no. of words.(n)
 The space complexity is of (O(word_length * unique_chars * no_of_words))
 
 Task6- Unsorted array
