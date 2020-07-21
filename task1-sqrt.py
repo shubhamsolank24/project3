@@ -1,19 +1,30 @@
-def sqrt(number): 
-    if number < 0:
-        print(number, ' invalid number choosen, please choose number greater than or equal to 0')
-        return -1
-    elif number == 1:
-        return 1
-    return binary_search_sqrt(0, number // 2, number)
+def sqrt(target):
+ 
+    if target < 0:
+        return None
+    if target <= 1:
+        return target
 
+    lowest, highest = 2, target // 2
 
-def binary_search_sqrt(left_pointer, right_pointer, target):
-    mid_pointer = (left_pointer + right_pointer) // 2
-    if mid_pointer ** 2 <= target < (mid_pointer + 1) ** 2:
-        return mid_pointer
-    elif mid_pointer ** 2 > target:
-        return binary_search_sqrt(left_pointer, mid_pointer - 1, target)
-    return binary_search_sqrt(mid_pointer + 1, right_pointer, target)
+    while lowest <= highest:
+        candidate = ((highest - lowest) // 2) + lowest
+        sq_candidate = candidate * candidate
+
+        if sq_candidate == target:
+            return candidate
+
+        if sq_candidate > target:
+            highest = candidate - 1
+        else:
+           
+            sq_candidate_plus = (candidate + 1) * (candidate + 1)
+            if sq_candidate_plus > target:
+                return candidate
+            lowest = candidate + 1
+
+ 
+    return None
 
 
 if __name__ == '__main__':
