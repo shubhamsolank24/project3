@@ -98,7 +98,7 @@ wordList = [
     "ant", "anthology", "antagonist", "antonym", 
     "fun", "function", "factory", 
     "trie", "trigger", "trigonometry", "tripod"
-    
+      "emerald","emergency","emerson"
 ]
 for word in wordList:
     MyTrie.insert(word)
