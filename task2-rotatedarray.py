@@ -1,56 +1,42 @@
+from algorithms import linear_search, binary_search
+
+
 def rotated_array_search(input_list, number):
    
-    if not isinstance(input_list, list):
+    if not input_list:
         return -1
 
-    if len(input_list) == 0:
+    pivot_idx = find_pivot(input_list, 0, len(input_list) - 1)  
+    if pivot_idx == len(input_list) - 1:
+        return binary_search(input_list, 0, len(input_list) - 1, number)  
+    elif input_list[0] <= number <= input_list[pivot_idx]:
+        input_list = input_list[:pivot_idx + 1]
+        return binary_search(input_list, 0, len(input_list) - 1, number) 
+    elif number > input_list[-1]:
         return -1
-
-    left_idx = 0
-    right_idx = len(input_list) - 1
-
-    while right_idx > left_idx + 1:
-        middle_idx = (right_idx + left_idx) // 2
-
-        middle_value = input_list[middle_idx]
-
-        
-        if middle_value == number:
-            return middle_idx
-
-      
-        if input_list[left_idx] < middle_value < input_list[right_idx]:
-            if number > middle_value:
-                left_idx = middle_idx
-            else:
-                right_idx = middle_idx
-       
-        elif middle_value > input_list[left_idx] and middle_value > input_list[right_idx]:
-            if input_list[left_idx] <= number < middle_value:
-                right_idx = middle_idx
-            else:
-                left_idx = middle_idx
-        
-        elif middle_value < input_list[left_idx] and middle_value < input_list[right_idx]:
-            if middle_value < number <= input_list[right_idx]:
-                left_idx = middle_idx
-            else:
-                right_idx = middle_idx
-
-    
-    if input_list[left_idx] == number:
-        return left_idx
-    elif input_list[right_idx] == number:
-        return right_idx
     else:
-        return -1
+        input_list = input_list[pivot_idx + 1:]
+        return pivot_idx + 1 + binary_search(input_list, 0, len(input_list) - 1, number)  
 
 
-def linear_search(input_list, number):
-    for idx, element in enumerate(input_list):
-        if element == number:
-            return idx
-    return -1
+def find_pivot(array, left_idx, right_idx):
+    if right_idx == left_idx:
+        return left_idx  # right_idx
+
+    mid_idx = (left_idx + right_idx) // 2
+
+    left = array[left_idx]
+    mid = array[mid_idx]
+
+    if mid > array[mid_idx + 1]: 
+        return mid_idx
+    if mid < array[mid_idx - 1]: 
+        return mid_idx - 1
+
+    if left > mid:  
+        return find_pivot(array, left_idx, mid_idx)
+    
+    return find_pivot(array, mid_idx + 1, right_idx)  
 
 
 def test_function(test_case):
@@ -60,7 +46,6 @@ def test_function(test_case):
         print("Pass")
     else:
         print("Fail")
-
 
 print("Calling function with non-rotated array: [1, 2, 3, 4], target value = 3")
 test_function([[1, 2, 3, 4], 3])
